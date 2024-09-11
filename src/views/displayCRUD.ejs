@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý CRUD</title>
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        .btn-edit {
+            outline: none;
+            border: none;
+            background: orange;
+            height: 25px;
+            width: 60px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .btn-delete {
+            outline: none;
+            border: none;
+            background: #ff0023;
+            height: 25px;
+            width: 60px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <table style="width: 100%;">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Họ</th>
+                <th>Tên</th>
+                <th>Địa chỉ</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(let i=0; i < data.length; i++) { %>
+                <tr>
+                    <td>
+                        <%= data[i].email %>
+                    </td>
+                    <td>
+                        <%= data[i].firstName %>
+                    </td>
+                    <td>
+                        <%= data[i].lastName %>
+                    </td>
+                    <td>
+                        <%= data[i].address %>
+                    </td>
+                    <td>
+                        <a href="/edit-crud?id=<%= data[i].id %>" class="btn-edit">Sửa</a>
+                        <button type="button" class="btn-delete">Xóa</button>
+                    </td>
+                </tr>
+                <% } %>
+        </tbody>
+    </table>
+</body>
+
+</html>
