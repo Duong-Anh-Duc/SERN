@@ -1,14 +1,16 @@
-import db from "../models";
 const CRUDService = require("../services/CRUDService")
 module.exports.homeController = async (req, res) => {
-    try{
-        const data = await db.User.findAll();
-        return res.render("homepage.ejs", {
-            data : JSON.stringify(data)
-        })
-
-    }catch(e){
-        console.log(e)
+    res.render("createCRUD.ejs")
+   
+}
+module.exports.deleteCRUD = async (req, res) => {
+    const userId = req.query.id;
+    if(userId){
+        await CRUDService.deleteUserByID(userId)
+        return res.send("Delete User Success!")
+    }
+    else{
+        return res.send("User Delete Fail!")
     }
 }
 module.exports.postCRUD = async (req, res) => {
@@ -18,7 +20,6 @@ module.exports.postCRUD = async (req, res) => {
 }
 module.exports.getCRUD = async (req, res) => {
     const data = await CRUDService.getAllUser()
-    console.log(data)
    
     return res.render("displayCRUD.ejs", {
         data : data
@@ -28,10 +29,15 @@ module.exports.getEditCRUD = async(req, res) => {
     const userId = req.query.id;
     if(userId){
         const userData = await CRUDService.getUserById(userId)
-        res.render("editCRUD.ejs")
+        res.render("editCRUD.ejs",{
+            user : userData
+        })
     }
     else{
         res.send("User not found!")
     }
-
+}
+module.exports.putCRUD = async(req, res) => {
+    await CRUDService.updateUserData(req.body)
+    return res.send("Update success!")
 }

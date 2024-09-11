@@ -16,6 +16,46 @@ module.exports.getAllUser = () => {
         }
     })
 }
+module.exports.updateUserData = (data) => {
+   return new Promise(async(resolve, reject) => {
+    try {
+        const user = await db.User.findOne({
+            where : {
+                id : data.id
+            }
+        })
+        if(user){
+            user.firstName = data.firstName
+            user.lastName = data.lastName
+            user.address = data.address
+            await user.save();
+            resolve();
+        }
+        else{
+            resolve();
+        }
+    } catch (error) {
+        reject(error)
+    }
+   })
+}
+module.exports.deleteUserByID = (userId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const user = await db.User.findOne({
+                where : {
+                    id : userId
+                }
+            })
+            if(user){
+                await user.destroy()
+            }
+            resolve()
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
 module.exports.getUserById = (userId) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -31,6 +71,7 @@ module.exports.getUserById = (userId) => {
                     resolve({})
                 }
             } catch (error) {
+                reject(error)
             
         }
     })
